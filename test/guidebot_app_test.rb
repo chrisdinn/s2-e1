@@ -13,7 +13,7 @@ class GuidebotAppTest < Test::Unit::TestCase
   end
  
   def test_valid_request_is_successful
-    sendgrid_email_params = { :from => "chris@testemail.com", :text => "directions from 120 Sherbourne St, Toronto, ON to 1 Bloor St, Toronto, ON" }
+    sendgrid_email_params = { :text => "directions from 120 Sherbourne St, Toronto, ON to 1 Bloor St, Toronto, ON", :headers => "smtp.mail=chris@testemail.com" }
     post '/request', sendgrid_email_params
     assert last_response.ok?
   end
@@ -33,9 +33,10 @@ class GuidebotAppTest < Test::Unit::TestCase
         :domain         => heroku_sendgrid_domain # the HELO domain provided by the client to the server
       }}
    
-    sendgrid_email_params = { :from => "chris@testemail.com", :text => "directions from 120 Sherbourne St, Toronto, ON to 1 Bloor St, Toronto, ON" }
+    email_from = "chris@testemail.com"
+    sendgrid_email_params = { :text => "directions from 120 Sherbourne St, Toronto, ON to 1 Bloor St, Toronto, ON", :headers => "...as permitted sender) smtp.mail=#{email_from}; dkim=pass " }
     
-    Pony.expects(:mail).with(smtp_settings.merge({  :to => sendgrid_email_params[:from], 
+    Pony.expects(:mail).with(smtp_settings.merge({  :to => email_from, 
                                                     :from => "guidebot@heroku.com",
                                                     :subject => "Directions",
                                                     :body => Guidebot.new(sendgrid_email_params[:text]).directions

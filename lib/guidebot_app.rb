@@ -11,29 +11,37 @@ class GuidebotApp < Sinatra::Base
     def logger
       LOGGER
     end
+    
+    def original_sender_email
+      /.* smtp.mail=([A-Z0-9._%-+]+@[A-Z0-9.-]+\.[A-Z]{2,4})/i
+    end
   end
   
   post "/request" do
     logger.info params.inspect
-    guidebot = Guidebot.new(params[:text])
-    message = {
-        :to => params[:from],
-        :from => "guidebot@heroku.com",
-        :subject => "Directions",
-        :body => guidebot.directions,
-        :via => :smtp, :via_options => {
-          :address => "smtp.sendgrid.net",
-          :port => "25",
-          :authentication => :plain,
-          :user_name      => ENV['SENDGRID_USERNAME'],
-          :password       => ENV['SENDGRID_PASSWORD'],
-          :domain         => ENV['SENDGRID_DOMAIN']
-        }
-    }
-    logger.info message.inspect
-    Pony.mail(message)
+    if params[:headers].match(original_sender_email)
+      guidebot = Guidebot.new(params[:text])
+      message = {
+          :to => $1,
+          :from => "guidebot@heroku.com",
+          :subject => "Directions",
+          :body => guidebot.directions,
+          :via => :smtp, :via_options => {
+            :address => "smtp.sendgrid.net",
+            :port => "25",
+            :authentication => :plain,
+            :user_name      => ENV['SENDGRID_USERNAME'],
+            :password       => ENV['SENDGRID_PASSWORD'],
+            :domain         => ENV['SENDGRID_DOMAIN']
+          }
+      }
+      logger.info message.inspect
+      Pony.mail(message)
     
-    "Success"
+      "Success"
+    else
+      "Failure"
+    end
   end
   
 end
