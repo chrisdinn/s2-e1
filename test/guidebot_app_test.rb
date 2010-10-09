@@ -35,7 +35,11 @@ class GuidebotAppTest < Test::Unit::TestCase
    
     sendgrid_email_params = { :from => "chris@testemail.com", :text => "directions from 120 Sherbourne St, Toronto, ON to 1 Bloor St, Toronto, ON" }
     
-    Pony.expects(:mail).with(smtp_settings.merge({:to => sendgrid_email_params[:from], :text => Guidebot.new(sendgrid_email_params[:text]).directions})).returns(true)
+    Pony.expects(:mail).with(smtp_settings.merge({  :to => sendgrid_email_params[:from], 
+                                                    :from => "guidebot@digital-achiever.com",
+                                                    :subject => "Directions",
+                                                    :text => Guidebot.new(sendgrid_email_params[:text]).directions
+                                                  })).returns(true)
   
     post '/request', sendgrid_email_params, 'SENDGRID_USERNAME' => heroku_sendgrid_username, 'SENDGRID_PASSWORD' => heroku_sendgrid_password, 'SENDGRID_DOMAIN' => heroku_sendgrid_domain  
     assert last_response.ok?
