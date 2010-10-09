@@ -7,16 +7,16 @@ class GuidebotApp < Sinatra::Base
     guidebot = Guidebot.new(params[:text])
     message = {
         :to => params[:from],
-        :from => "guidebot@digital-achiever.com",
+        :from => "guidebot@heroku.com",
         :subject => "Directions",
-        :text => guidebot.directions,
+        :body => guidebot.directions,
         :via => :smtp, :via_options => {
           :address => "smtp.sendgrid.net",
           :port => "25",
           :authentication => :plain,
-          :user_name      => env['SENDGRID_USERNAME'],
-          :password       => env['SENDGRID_PASSWORD'],
-          :domain         => env['SENDGRID_DOMAIN']
+          :user_name      => ENV['SENDGRID_USERNAME'],
+          :password       => ENV['SENDGRID_PASSWORD'],
+          :domain         => ENV['SENDGRID_DOMAIN']
         }
     }    
     Pony.mail(message)

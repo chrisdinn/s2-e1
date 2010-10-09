@@ -28,7 +28,7 @@ class GuidebotAppTest < Test::Unit::TestCase
         :address        => 'smtp.sendgrid.net',
         :port           => '25',
         :authentication => :plain,
-        :user_name      => heroku_sendgrid_username,
+        :user_name     => heroku_sendgrid_username,
         :password       => heroku_sendgrid_password,
         :domain         => heroku_sendgrid_domain # the HELO domain provided by the client to the server
       }}
@@ -36,9 +36,9 @@ class GuidebotAppTest < Test::Unit::TestCase
     sendgrid_email_params = { :from => "chris@testemail.com", :text => "directions from 120 Sherbourne St, Toronto, ON to 1 Bloor St, Toronto, ON" }
     
     Pony.expects(:mail).with(smtp_settings.merge({  :to => sendgrid_email_params[:from], 
-                                                    :from => "guidebot@digital-achiever.com",
+                                                    :from => "guidebot@heroku.com",
                                                     :subject => "Directions",
-                                                    :text => Guidebot.new(sendgrid_email_params[:text]).directions
+                                                    :body => Guidebot.new(sendgrid_email_params[:text]).directions
                                                   })).returns(true)
   
     post '/request', sendgrid_email_params, 'SENDGRID_USERNAME' => heroku_sendgrid_username, 'SENDGRID_PASSWORD' => heroku_sendgrid_password, 'SENDGRID_DOMAIN' => heroku_sendgrid_domain  
