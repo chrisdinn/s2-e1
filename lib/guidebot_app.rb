@@ -1,9 +1,20 @@
 require 'sinatra/base'
 require 'pony'
+require 'logger'
 
 class GuidebotApp < Sinatra::Base
-    
+  configure do
+    LOGGER = Logger.new("log/production.log") 
+  end
+
+  helpers do
+    def logger
+      LOGGER
+    end
+  end
+  
   post "/request" do
+    logger.info params.inspect
     guidebot = Guidebot.new(params[:text])
     message = {
         :to => params[:from],
@@ -18,7 +29,8 @@ class GuidebotApp < Sinatra::Base
           :password       => ENV['SENDGRID_PASSWORD'],
           :domain         => ENV['SENDGRID_DOMAIN']
         }
-    }    
+    }
+    logger.info message.inspect
     Pony.mail(message)
     
     "Success"
