@@ -5,6 +5,7 @@ require 'json'
 # Guidebot is a tool for finding directions.
 #
 # Guidebot relies on the Google Directions API to work in order to its bot-magic
+#
 class Guidebot
   
   API_URL = "http://maps.googleapis.com/maps/api/directions/json"
@@ -13,7 +14,7 @@ class Guidebot
   attr_reader :destination
   
   def initialize(request)
-    if request.match(/directions from (.*) to (.*)/i)
+    if request.match(/directions from (.*) to (.*)\n*/i)
       @origin = $1
       @destination = $2
     else

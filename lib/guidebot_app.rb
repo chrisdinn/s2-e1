@@ -2,6 +2,15 @@ require 'sinatra/base'
 require 'pony'
 require 'logger'
 
+# =GuidebotApp
+#
+# GuidebotApp is a mailer for Guidebot, built to be deployed using Heroku and the Sendgrid
+# Parse API (http://wiki.sendgrid.com/doku.php?id=parse_api)
+#
+# GuidebotApp uses the Pony gem to send email through the Sendgrid stmp servers 
+#
+# When deploying, be sure to use the send_grid:free Heroku addon.
+#
 class GuidebotApp < Sinatra::Base
   configure do
     LOGGER = Logger.new("log/production.log") 

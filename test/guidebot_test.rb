@@ -25,6 +25,19 @@ class GuidebotTest < Test::Unit::TestCase
     guidebot.directions
   end
   
+  
+  def test_properly_format_api_call_with_messy_input
+    origin = "120 Sherbourne St, Toronto, ON"
+    destination = "1 Yonge St, Toronto, ON"
+    test_request = "directions from #{origin} to #{destination}\n\n--{{signature}} {{pseudo-inspirational quote}}"
+    
+    api_request = Guidebot::API_URL + "?origin=" + CGI.escape(origin) + "&destination=" + CGI.escape(destination) + "&sensor=false" 
+    
+    guidebot = Guidebot.new(test_request)
+    RestClient.expects(:get).with(api_request).returns(File.read("test/api_response.json"))
+    guidebot.directions
+  end
+  
   def test_properly_format_directions_response
     origin = "120 Sherbourne St, Toronto, ON"
     destination = "1 Yonge St, Toronto, ON"
