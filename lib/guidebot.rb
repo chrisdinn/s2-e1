@@ -34,6 +34,9 @@ class Guidebot
       response << " #{list_number}. #{strip_html(step["html_instructions"])} - #{step["duration"]["text"]}\n\n"
       list_number += 1
     end
+    
+    response << "--\nMap data (c)2010 Google\n\nGuidebot is operated by Chris Dinn <chrisgdinn@gmail.com>"
+    
     response
   end
   

@@ -56,6 +56,8 @@ class GuidebotTest < Test::Unit::TestCase
     third_step = api_response["routes"].first["legs"].first["steps"][2]
     directions << " 3. #{strip_html(third_step["html_instructions"])} - #{third_step["duration"]["text"]}\n\n"
     
+    directions << "--\nMap data (c)2010 Google\n\nGuidebot is operated by Chris Dinn <chrisgdinn@gmail.com>"
+    
     RestClient.stubs(:get).returns(raw_api_response)
     
     test_request = "directions from #{origin} to #{destination}"

@@ -32,7 +32,7 @@ class GuidebotApp < Sinatra::Base
       guidebot = Guidebot.new(params[:text])
       message = {
           :to => $1,
-          :from => "guidebot@heroku.com",
+          :from => "guidebot@digital-achiever.com",
           :subject => "Directions",
           :body => guidebot.directions,
           :via => :smtp, :via_options => {
