@@ -8,5 +8,5 @@ require 'guidebot'
 require 'guidebot_app'
 
 def strip_html(string)
-  string.gsub(/<\/?[^>]*>/, "")
+  string.gsub(/<div [^>]*>/, " ** ").gsub(/<\/?[^>]*>/, "")
 end

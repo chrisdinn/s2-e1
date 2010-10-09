@@ -33,14 +33,13 @@ class Guidebot
       response << " #{list_number}. #{strip_html(step["html_instructions"])} - #{step["duration"]["text"]}\n\n"
       list_number += 1
     end
-    
     response
   end
   
   private
   
   def strip_html(string)
-    string.gsub(/<\/?[^>]*>/, "")
+    string.gsub(/<div [^>]*>/, " ** ").gsub(/<\/?[^>]*>/, "")
   end
   
 end
