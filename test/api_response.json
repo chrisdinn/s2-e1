@@ -1,0 +1,104 @@
+{
+  "status": "OK",
+  "routes": [ {
+    "summary": "Lower Sherbourne St and Queens Quay E",
+    "legs": [ {
+      "steps": [ {
+        "travel_mode": "DRIVING",
+        "start_location": {
+          "lat": 43.6539100,
+          "lng": -79.3692700
+        },
+        "end_location": {
+          "lat": 43.6503800,
+          "lng": -79.3678900
+        },
+        "polyline": {
+          "points": "}cmiG|xlcNhB]vQuF",
+          "levels": "B?B"
+        },
+        "duration": {
+          "value": 117,
+          "text": "2 mins"
+        },
+        "html_instructions": "Head \u003cb\u003esouth\u003c/b\u003e on \u003cb\u003eSherbourne St\u003c/b\u003e toward \u003cb\u003eBritain St\u003c/b\u003e",
+        "distance": {
+          "value": 408,
+          "text": "0.4 km"
+        }
+      }, {
+        "travel_mode": "DRIVING",
+        "start_location": {
+          "lat": 43.6503800,
+          "lng": -79.3678900
+        },
+        "end_location": {
+          "lat": 43.6451900,
+          "lng": -79.3654000
+        },
+        "polyline": {
+          "points": "{mliGhplcNpYyJzDwB",
+          "levels": "B?B"
+        },
+        "duration": {
+          "value": 162,
+          "text": "3 mins"
+        },
+        "html_instructions": "Continue onto \u003cb\u003eLower Sherbourne St\u003c/b\u003e",
+        "distance": {
+          "value": 611,
+          "text": "0.6 km"
+        }
+      }, {
+        "travel_mode": "DRIVING",
+        "start_location": {
+          "lat": 43.6451900,
+          "lng": -79.3654000
+        },
+        "end_location": {
+          "lat": 43.6419200,
+          "lng": -79.3746400
+        },
+        "polyline": {
+          "points": "mmkiGv`lcNlSvx@",
+          "levels": "BB"
+        },
+        "duration": {
+          "value": 86,
+          "text": "1 min"
+        },
+        "html_instructions": "Turn \u003cb\u003eright\u003c/b\u003e at \u003cb\u003eQueens Quay E\u003c/b\u003e",
+        "distance": {
+          "value": 828,
+          "text": "0.8 km"
+        }
+      } ],
+      "duration": {
+        "value": 365,
+        "text": "6 mins"
+      },
+      "distance": {
+        "value": 1847,
+        "text": "1.8 km"
+      },
+      "start_location": {
+        "lat": 43.6539100,
+        "lng": -79.3692700
+      },
+      "end_location": {
+        "lat": 43.6419200,
+        "lng": -79.3746400
+      },
+      "start_address": "120 Sherbourne St, Toronto, ON M5A 1S4, Canada",
+      "end_address": "1 Yonge St, Toronto, ON M5E, Canada",
+      "via_waypoint": [ ]
+    } ],
+    "copyrights": "Map data ©2010 Google",
+    "overview_polyline": {
+      "points": "}cmiG|xlcNhB]tFaBhZuJxI_DjDoBlSvx@",
+      "levels": "B????@B"
+    },
+    "warnings": [ ],
+    "waypoint_order": [ ]
+  } ]
+}
