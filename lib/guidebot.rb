@@ -1,5 +1,6 @@
 require 'cgi'
 require "rest-client"
+require 'json'
 
 # Guidebot is a tool for finding directions.
 #
@@ -22,8 +23,24 @@ class Guidebot
   
   def directions
     api_request = API_URL + "?origin=" + CGI.escape(origin) + "&destination=" + CGI.escape(destination) + "&sensor=false"
-    api_response = RestClient.get(api_request)
-    puts api_response.to_s
+    raw_api_response = RestClient.get(api_request)
+    directions = JSON.parse(raw_api_response)
+    
+    response = "Driving directions from #{origin} to #{destination}\n\n"
+    
+    list_number = 1
+    directions["routes"].first["legs"].first["steps"].each do |step|
+      response << " #{list_number}. #{strip_html(step["html_instructions"])} - #{step["duration"]["text"]}\n\n"
+      list_number += 1
+    end
+    
+    response
+  end
+  
+  private
+  
+  def strip_html(string)
+    string.gsub(/<\/?[^>]*>/, "")
   end
   
 end
