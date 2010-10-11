@@ -66,5 +66,4 @@ class GuidebotTest < Test::Unit::TestCase
     assert_equal directions, guidebot.directions
   end
   
-      
 end

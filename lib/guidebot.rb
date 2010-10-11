@@ -10,6 +10,10 @@ class Guidebot
   
   API_URL = "http://maps.googleapis.com/maps/api/directions/json"
     
+  def self.usage_instructions
+    "Proper usage: directions from {origin} to {destination}, ie. directions from New York, NY to San Francisco, CA"
+  end  
+    
   attr_reader :origin
   attr_reader :destination
   
