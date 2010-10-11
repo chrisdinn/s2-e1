@@ -3,7 +3,7 @@ require 'rack/test'
 
 class GuidebotAppTest < Test::Unit::TestCase
   include Rack::Test::Methods  
-  
+
   GuidebotApp.const_set("ENV", { 'SENDGRID_USERNAME' => "username", 'SENDGRID_PASSWORD' => "password", 'SENDGRID_DOMAIN' => "domain" })
   
   def app
@@ -12,8 +12,6 @@ class GuidebotAppTest < Test::Unit::TestCase
  
   def setup
     Pony.stubs(:mail).returns(true)
-    
-    
     @smtp_settings = { :via => :smtp, :via_options => {
         :address        => 'smtp.sendgrid.net',
         :port           => '25',
@@ -24,10 +22,16 @@ class GuidebotAppTest < Test::Unit::TestCase
       }}
   end
  
-  def test_valid_request_is_successful
-    sendgrid_email_params = { :text => "directions from 120 Sherbourne St, Toronto, ON to 1 Bloor St, Toronto, ON", :headers => "smtp.mail=chris@testemail.com" }
+  def test_valid_request_in_text_is_successful
+    sendgrid_email_params = { :subject => "", :text => "directions from 120 Sherbourne St, Toronto, ON to 1 Bloor St, Toronto, ON", :headers => " smtp.mail=chris@testemail.com" }
     post '/request', sendgrid_email_params
-    assert last_response.ok?
+    assert_equal "Success", last_response.body
+  end
+  
+  def test_valid_request_in_subject_is_successful
+    sendgrid_email_params = { :subject => "directions from 120 Sherbourne St, Toronto, ON to 1 Bloor St, Toronto, ON", :headers => " smtp.mail=chris@testemail.com" }
+    post '/request', sendgrid_email_params
+    assert_equal "Success", last_response.body
   end
   
   def test_valid_request_should_send_proper_email
@@ -41,7 +45,7 @@ class GuidebotAppTest < Test::Unit::TestCase
                                                   })).returns(true)
   
     post '/request', sendgrid_email_params
-    assert last_response.ok?
+    assert_equal "Success", last_response.body
   end
   
   def test_invalid_request_should_respond_with_usage_instructions
@@ -54,7 +58,7 @@ class GuidebotAppTest < Test::Unit::TestCase
                                                   })).returns(true)
   
     post '/request', sendgrid_email_params
-    assert last_response.ok?
+    assert_equal "Directions not found", last_response.body
   end
   
   
