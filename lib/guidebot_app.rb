@@ -39,41 +39,27 @@ class GuidebotApp < Sinatra::Base
   end
   
   post "/request" do
-    if params[:headers].match(original_sender_email)
-      
+    if params[:headers].match(original_sender_email)  
       if params[:subject].nil? || params[:subject].empty?
         directions_request = params[:text]
       else
         directions_request = params[:subject]
       end
       
+      message = { :to => $1, :from => "guidebot@digital-achiever.com" }
+      
       begin
         guidebot = Guidebot.new(directions_request)
-        message = {
-            :to => $1,
-            :from => "guidebot@digital-achiever.com",
-            :subject => "Directions",
-            :body => guidebot.directions,
-           
-        }
+        message.merge!({ :subject => "Directions", :body => guidebot.directions })
         response = "Success"
       rescue ArgumentError
-        message = {
-            :to => $1,
-            :from => "guidebot@digital-achiever.com",
-            :subject => "Directions not found",
-            :body => "Received improper request: \"#{directions_request}\"\n\n" + Guidebot.usage_instructions,
-           
-        }
+        message.merge!({ :subject => "Directions not found", :body => "Received improper request: \"#{directions_request}\"\n\n" + Guidebot.usage_instructions })
         response = "Directions not found"
       end
       
-      logger.info message.inspect
       Pony.mail(message.merge(smtp_settings))
     
       response
-    else
-      "Failure"
     end
   end
   
