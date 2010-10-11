@@ -6,6 +6,11 @@ require 'json'
 #
 # Guidebot relies on the Google Directions API to work in order to its bot-magic
 #
+# Guidebot lives at guidebot@digital-achiever.com. To get directions, email 
+# with your request in the subject or body.
+#
+# Ask for directions like this: 
+#     directions from Toronto, ON to Miami, FL
 class Guidebot
   
   API_URL = "http://maps.googleapis.com/maps/api/directions/json"
